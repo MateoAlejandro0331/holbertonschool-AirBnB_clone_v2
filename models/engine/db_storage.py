@@ -4,6 +4,13 @@ from ast import Delete
 from os import getenv
 from sqlalchemy import (create_engine)
 from sqlalchemy.ext.declarative import declarative_base
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from sqlalchemy import Column, String, ForeignKey
 
 Base = declarative_base()
 
@@ -29,13 +36,6 @@ class DBStorage():
     
     def all(self, cls=None):
         """Return a dictionary called FileStorage"""
-        from models.user import User
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.place import Place
-        from models.review import Review
-
         types_of_objects = (User, State, City, Amenity, Place, Review)
         if (cls == None):
             self.__engine = types_of_objects
@@ -54,7 +54,11 @@ class DBStorage():
             self.__session.delete(obj)
 
     def reload(self):
-        """Nothing for now"""
-        pass
+        """create all tables in the database"""
+        Base.metadata.create_table(self.__engine)
+
+
+        
+
 
 
