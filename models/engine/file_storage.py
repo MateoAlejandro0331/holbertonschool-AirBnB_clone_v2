@@ -56,5 +56,6 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        """Method to delete an object"""
         del_obj = "{}.{}".format(type(obj).__name__, obj.id)
         del FileStorage.__objects[del_obj]
