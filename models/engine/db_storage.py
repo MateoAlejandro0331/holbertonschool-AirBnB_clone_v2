@@ -36,7 +36,7 @@ class DBStorage():
     
     def all(self, cls=None):
         """Return a dictionary called FileStorage"""
-        types_of_objects = [User, State, City, Amenity, Place, Review]
+        mydic = {}
         self.__session = Session(self.__engine)
         if (cls == None):
             query = self.__session.query(User, State, City, Amenity, Place, Review).all()
@@ -46,6 +46,7 @@ class DBStorage():
             query = self.__session.query(cls).all()
             for instance in query:
                 print(f"All method {instance} finish all method")
+        return(mydic)
     
     def new(self, obj):
         """add the object to the current database session"""
@@ -67,9 +68,4 @@ class DBStorage():
             bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(my_session)
         self.__session = Session()
-
-
-        
-
-
 
