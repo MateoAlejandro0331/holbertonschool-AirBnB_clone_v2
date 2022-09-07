@@ -4,23 +4,29 @@ from os import getenv
 from sqlalchemy.orm import scoped_session, sessionmaker, Session
 from sqlalchemy import (create_engine)
 from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from sqlalchemy import Column, String, ForeignKey
 
 Base = declarative_base()
 
-class DBStorage():
+
+class DBStorage:
     """
     This module defines a class call db_storage
     """
 
     __engine = None
     __session = None
+    classes = {
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                }
 
     def __init__(self):
         """Init method"""
@@ -39,15 +45,14 @@ class DBStorage():
         mydic = {}
         self.__session = Session(self.__engine)
         if (cls == None):
-            query = self.__session.query(User, State, City, Amenity, Place, Review).all()
-            for instance in query:
-                print(f"All method cls=None {instance} finish all method")
+            print(self.__class__)
         else:
-            query = self.__session.query(cls).all()
-            for instance in query:
-                print(f"All method {instance} finish all method")
+            for classes in self.classes:
+                query = self.__session.query(classes).all()
+                for instance in query:
+                    mydic[f"{instance.__class__}.{instance.id}"] = instance
         return(mydic)
-    
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
