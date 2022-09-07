@@ -134,7 +134,6 @@ class HBNBCommand(cmd.Cmd):
             setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -209,7 +208,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        from os import getenv
         print_list = []
 
         if args:
@@ -220,7 +218,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage.all(HBNBCommand.classes[args]).items():
                 print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
