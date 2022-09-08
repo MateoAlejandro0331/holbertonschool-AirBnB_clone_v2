@@ -48,7 +48,6 @@ class DBStorage:
                     mydic[f"{instance.__class__}.{instance.id}"] = instance
         else:
             query = self.__session.query(cls).all()
-            print(query, "query")
             for instance in query:
                 mydic[f"{instance.__class__}.{instance.id}"] = instance
         return(mydic)
