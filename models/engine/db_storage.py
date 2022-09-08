@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """This module defines a class call db_storage"""
 from os import getenv
-from sqlalchemy.orm import scoped_session, sessionmaker, Session
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import BaseModel
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import (create_engine)
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
 from models.city import City
@@ -12,7 +11,6 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-Base = declarative_base()
 
 
 class DBStorage:
@@ -36,7 +34,7 @@ class DBStorage:
                                                 getenv('HBNB_MYSQL_HOST'),
                                                 getenv('HBNB_MYSQL_DB')),
                                         pool_pre_ping=True)
-        #Base.metadata.create_all(self.__engine)
+
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
     
@@ -50,6 +48,7 @@ class DBStorage:
                     mydic[f"{instance.__class__}.{instance.id}"] = instance
         else:
             query = self.__session.query(cls).all()
+            print(query, "query")
             for instance in query:
                 mydic[f"{instance.__class__}.{instance.id}"] = instance
         return(mydic)
@@ -60,6 +59,7 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
+        print("entre a guardar")
         self.__session.commit()
 
     def delete(self, obj=None):
