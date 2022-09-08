@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Console Module """
-from ast import arg, arguments
 import cmd
 import sys
 from tokenize import String
@@ -132,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[arguments[0]]()
         for key, value in mydic.items():
             setattr(new_instance, key, value)
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):

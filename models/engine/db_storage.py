@@ -59,7 +59,6 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
-        print("entre a guardar")
         self.__session.commit()
 
     def delete(self, obj=None):
