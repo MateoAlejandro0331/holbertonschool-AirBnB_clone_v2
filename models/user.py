@@ -2,7 +2,6 @@
 """This module defines a class User"""
 from os import getenv
 from models.base_model import BaseModel, Base
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String
 
 
@@ -12,8 +11,8 @@ class User(BaseModel, Base):
     if getenv("HBNB_TYPE_STORAGE") == 'db':
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
-        first_name = Column(String(128), nullable=False)
-        last_name = Column(String(128), nullable=False)
+        first_name = Column(String(128))
+        last_name = Column(String(128))
     else:
         email = ""
         password = ""
