@@ -12,7 +12,6 @@ from models.place import Place
 from models.review import Review
 
 
-
 class DBStorage:
     """
     This module defines a class call db_storage
@@ -28,22 +27,21 @@ class DBStorage:
 
     def __init__(self):
         """Init method"""
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                        .format(getenv('HBNB_MYSQL_USER'),
-                                                getenv('HBNB_MYSQL_PWD'),
-                                                getenv('HBNB_MYSQL_HOST'),
-                                                getenv('HBNB_MYSQL_DB')),
-                                        pool_pre_ping=True)
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
+                getenv('HBNB_MYSQL_USER'), getenv('HBNB_MYSQL_PWD'),
+                getenv('HBNB_MYSQL_HOST'), getenv('HBNB_MYSQL_DB')),
+            pool_pre_ping=True)
 
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
-    
+
     def all(self, cls=None):
         """Return a dictionary called FileStorage"""
         mydic = {}
-        if (cls == None):
-            for classes in DBStorage.classes:
-                query = self.__session.query(classes).all()
+        if (cls is None):
+            for input_class in DBStorage.classes:
+                query = self.__session.query(input_class).all()
                 for instance in query:
                     mydic[f"{instance.__class__}.{instance.id}"] = instance
         else:
@@ -72,4 +70,3 @@ class DBStorage:
             bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(Session1)
         self.__session = Session()
-

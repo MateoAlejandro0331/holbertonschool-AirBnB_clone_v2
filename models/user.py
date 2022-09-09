@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String
 Base = declarative_base()
 
+
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     __tablename__ = 'users'
