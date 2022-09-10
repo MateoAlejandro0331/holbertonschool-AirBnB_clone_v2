@@ -2,17 +2,17 @@
 """ Place Module for HBNB project """
 from os import getenv
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
+from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 import models
 
 
-metadata = Base.metadata
+# metadata = Base.metadata
 
-place_amenity = Table('association', metadata,
-    Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-    Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
-)
+# place_amenity = Table('association', metadata,
+#    Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+#    Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
+#)
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -29,7 +29,7 @@ class Place(BaseModel, Base):
         latitude = Column(Float)
         longitude = Column(Float)
         reviews = relationship('Review', cascade='all, delete', backref='place')
-        amenities = relationship('Amenity', backref='places', secondary='place_amenity', viewonly=False)
+        # amenities = relationship('Amenity', backref='places', secondary='place_amenity', viewonly=False)
     else:
         # getter method
         def reviews(self):
