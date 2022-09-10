@@ -4,6 +4,7 @@ from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
+import models
 
 
 metadata = Base.metadata
@@ -27,16 +28,13 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float)
         longitude = Column(Float)
+        reviews = relationship('Review', cascade='all, delete', backref='place')
         amenities = relationship('Amenity', backref='places', secondary='place_amenity', viewonly=False)
     else:
-        city_id = ""
-        user_id = ""
-        name = ""
-        description = ""
-        number_rooms = 0
-        number_bathrooms = 0
-        max_guest = 0
-        price_by_night = 0
-        latitude = 0.0
-        longitude = 0.0
-        amenity_ids = []
+        # getter method
+        def reviews(self):
+            list_ins = []
+            for review in models.storage.all(models.review):
+                if review.place_id == self.id:
+                    list_ins = review
+            return list_ins
