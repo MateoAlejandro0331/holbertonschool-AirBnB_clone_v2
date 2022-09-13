@@ -20,13 +20,17 @@ ubuntu@89-web-01:~/$ curl localhost/hbnb_static/index.html
     Holberton School
   </body>
 </html>"
+#Create directories
 sudo mkdir -p /data/web_static/releases/test/
 sudo mkdir -p /data/web_static/shared/
-sudo mkdir -p /data/web_static/current
+#Create html file and write into it
 sudo touch /data/web_static/releases/test/index.html
 sudo chmod 777 /data/web_static/releases/test/index.html
 echo "$print" > /data/web_static/releases/test/index.html
+#Create a symbolic link: 1=referenced           2=copy
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+#Change owner and group to data folder
 sudo chown -R ubuntu:ubuntu /data/
+#Changes nginx config
 sudo sed -i "/listen 80 default_server/ a location /hbnb_static/ { alias /data/web_static/current/;}" /etc/nginx/sites-available/default
 sudo service nginx restart
