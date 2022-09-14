@@ -62,5 +62,4 @@ class FileStorage:
             del FileStorage.__objects[del_obj]
 
     def close(self):
-        from models import storage
-        storage.reload()
+        self.reload()

@@ -4,6 +4,7 @@ from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from models.city import City
 
 
 class State(BaseModel, Base):
@@ -19,6 +20,7 @@ class State(BaseModel, Base):
         def cities(self):
             from models import storage
             mydict = []
-            for instance in storage.all():
-                if instance.get('state_id') == State.id:
+            for instance in storage.all(City).values():
+                if instance.state_id == self.id:
                     mydict.append(instance)
+            return mydict
