@@ -16,5 +16,6 @@ def do_pack():
     result = local("tar -cvzf versions/{} web_static ".format(file))
     if result.failed:
         return None
-    return "web_static_" + time.strftime("%Y%m%d%H%M%S", time.gmtime())\
+    return "versions/web_static_" +\
+        time.strftime("%Y%m%d%H%M%S", time.gmtime())\
         + ".tgz"
