@@ -42,8 +42,8 @@ def do_deploy(archive_path):
             /data/web_static/releases/{}/".format(rute, rute))
         run("rm -rf /data/web_static/releases/{}/web_static".format(rute))
         run("rm -rf /data/web_static/current")
-        run("ln - s /data/web_static/releases/{}/\
-                /data/web_static/current".format(rute))
+        run("ln -s /data/web_static/releases/{}/\
+            /data/web_static/current".format(rute))
         return True
     except Exception:
         return False
