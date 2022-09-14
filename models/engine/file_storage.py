@@ -60,3 +60,7 @@ class FileStorage:
         if obj:
             del_obj = "{}.{}".format(type(obj).__name__, obj.id)
             del FileStorage.__objects[del_obj]
+
+    def close(self):
+        from models import storage
+        storage.reload()

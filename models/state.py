@@ -14,3 +14,11 @@ class State(BaseModel, Base):
         cities = relationship('City', cascade='all, delete', backref='state')
     else:
         name = ""
+
+        @property
+        def cities(self):
+            from models import storage
+            mydict = []
+            for instance in storage.all():
+                if instance.get('state_id') == State.id:
+                    mydict.append(instance)
