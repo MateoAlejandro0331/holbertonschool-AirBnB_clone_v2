@@ -22,7 +22,8 @@ def do_pack():
     result = local("tar -cvzf versions/{} web_static ".format(file))
     if result.failed:
         return None
-    return result
+    return "versions/web_static_" + time.strftime("%Y%m%d%H%M%S", time.gmtime())\
+        + ".tgz"
 
 
 def do_deploy(archive_path):
