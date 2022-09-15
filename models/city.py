@@ -6,7 +6,7 @@ from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 
-class City(BaseModel, Base):
+class City(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd') else object):
     """ The city class, contains state ID and name """
     __tablename__ = 'cities'
     if getenv("HBNB_TYPE_STORAGE") == 'db':

@@ -14,7 +14,7 @@ import models
 #    Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
 #)
 
-class Place(BaseModel, Base):
+class Place(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd') else object):
     """ A place to stay """
     __tablename__ = 'places'
     if getenv("HBNB_TYPE_STORAGE") == 'db':

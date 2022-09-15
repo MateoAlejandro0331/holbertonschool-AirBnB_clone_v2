@@ -7,10 +7,10 @@ from sqlalchemy.orm import relationship
 from models.city import City
 
 
-class State(BaseModel, Base):
+class State(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd') else object):
     """ State class """
-    __tablename__ = 'states'
     if getenv("HBNB_TYPE_STORAGE") == 'db':
+        __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship('City', cascade='all, delete', backref='state')
     else:
