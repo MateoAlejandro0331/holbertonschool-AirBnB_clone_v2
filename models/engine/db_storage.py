@@ -2,7 +2,7 @@
 """This module defines a class call db_storage"""
 from os import getenv
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy import (create_engine)
+from sqlalchemy import create_engine
 from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
@@ -40,16 +40,18 @@ class DBStorage:
         """Return a dictionary called FileStorage"""
         mydic = {}
         if (cls is None):
-            for input_class in DBStorage.classes:
+            for input_class in DBStorage.classes.values():
                 query = self.__session.query(input_class).all()
                 for instance in query:
                     mydic["{}.{}".format(
                         instance.__class__, instance.id)] = instance
         else:
-            query = self.__session.query(cls).all()
+            for obj in self.__session.query(cls).all():
+                mydic[obj.to_dict()['__class__'] + '.' + obj.id] = obj
+            """query = self.__session.query(cls).all()
             for instance in query:
                 mydic["{}.{}".format(instance.__class__,
-                                     instance.id)] = instance
+                                     instance.id)] = instance"""
         return(mydic)
 
     def new(self, obj):
@@ -75,4 +77,4 @@ class DBStorage:
 
     def close(self):
         """close method"""
-        self.__session.close()
+        self.__session.remove()
