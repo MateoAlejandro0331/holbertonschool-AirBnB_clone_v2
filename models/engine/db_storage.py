@@ -43,11 +43,13 @@ class DBStorage:
             for input_class in DBStorage.classes:
                 query = self.__session.query(input_class).all()
                 for instance in query:
-                    mydic[f"{instance.__class__}.{instance.id}"] = instance
+                    mydic["{}.{}".format(
+                        instance.__class__, instance.id)] = instance
         else:
             query = self.__session.query(cls).all()
             for instance in query:
-                mydic[f"{instance.__class__}.{instance.id}"] = instance
+                mydic["{}.{}".format(instance.__class__,
+                                     instance.id)] = instance
         return(mydic)
 
     def new(self, obj):
