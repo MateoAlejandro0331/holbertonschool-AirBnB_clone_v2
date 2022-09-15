@@ -7,14 +7,8 @@ from sqlalchemy.orm import relationship
 import models
 
 
-# metadata = Base.metadata
-
-# place_amenity = Table('association', metadata,
-#    Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-#    Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
-#)
-
-class Place(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd') else object):
+class Place(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd')
+            else object):
     """ A place to stay """
     __tablename__ = 'places'
     if getenv("HBNB_TYPE_STORAGE") == 'db':
@@ -28,8 +22,8 @@ class Place(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd') else object)
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float)
         longitude = Column(Float)
-        reviews = relationship('Review', cascade='all, delete', backref='place')
-        # amenities = relationship('Amenity', backref='places', secondary='place_amenity', viewonly=False)
+        reviews = relationship('Review', cascade='all, delete',
+                               backref='place')
     else:
         # getter method
         def reviews(self):

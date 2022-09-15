@@ -7,7 +7,8 @@ from sqlalchemy.orm import relationship
 from models.city import City
 
 
-class State(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd') else object):
+class State(BaseModel, Base if(getenv('HBNB_TYPE_STORAGE') == 'bd')
+            else object):
     """ State class """
     if getenv("HBNB_TYPE_STORAGE") == 'db':
         __tablename__ = 'states'
